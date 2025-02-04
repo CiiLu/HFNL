@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "examplemod",
+  "version": "0.0.1",
+  "name": "Example Mod",
+  "description": "Example description.",
+  "authors": [],
+  "contact": {
+    "homepage":"https://example.com/"
+  },
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "hfnl.examplemod.ExampleMod"
+    ],
+    "main": [
+    ]
+  },
+  "mixins": [
+    "examplemod.mixins.json"
+  ]
+}

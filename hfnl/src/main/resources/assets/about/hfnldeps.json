@@ -1,0 +1,12 @@
+[
+  {
+    "title" : "Hello Minecraft! Launcher",
+    "subtitle" : "Copyright © 2025 huangyuhui\nLicensed under GPLv3 license with the following additional terms.",
+    "externalLink" : "https://github.com/HMCL-dev/HMCL/"
+  },
+  {
+    "title" : "Fabric Loader",
+    "subtitle" : "Copyright © 2016 FabricMC\nLicensed under the Apache License 2.0.",
+    "externalLink" : "https://github.com/FabricMC/fabric-loader/"
+  }
+]
