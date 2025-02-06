@@ -19,11 +19,9 @@ subprojects {
     dependencies {
         implementation("net.fabricmc:fabric-loader:0.16.10")
         implementation("net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7")
-        implementation("net.fabricmc:access-widener:2.1.0")
-        implementation("net.fabricmc:tiny-mappings-parser:0.2.2.14")
-        implementation("org.ow2.asm:asm:9.7.1")
         implementation("org.slf4j:slf4j-api:2.0.9")
         implementation("io.github.llamalad7:mixinextras-common:0.4.1")
+        implementation("org.ow2.asm:asm:9.7.1")
         implementation("org.ow2.asm:asm-tree:9.7.1")
         implementation("org.ow2.asm:asm-commons:9.7.1")
         implementation("org.ow2.asm:asm-util:9.7.1")
@@ -34,7 +32,10 @@ subprojects {
     javafx {
         configuration = "compileOnly"
         version = "17"
-        modules("javafx.controls", "javafx.media")
+        modules("javafx.controls")
     }
-
+    java{
+        targetCompatibility=JavaVersion.VERSION_1_8
+        sourceCompatibility=JavaVersion.VERSION_1_8
+    }
 }

@@ -11,6 +11,7 @@
 
 package hfnl.launch;
 
+import hfnl.launch.utils.FileLogger;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.impl.launch.knot.Knot;
 
@@ -20,10 +21,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        if (System.getProperties().get("fabric.gameJarPath") == null) {
-            throw new RuntimeException("fabric.gameJarPath is null");
-        }
-
         System.getProperties().putIfAbsent("fabric.development", "true");
 
         String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss"));
