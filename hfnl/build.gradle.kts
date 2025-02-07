@@ -15,7 +15,9 @@ tasks.register<Copy>("copyDependencies") {
         include {
             it.name.endsWith(".jar") && (
                     !it.name.startsWith("hmcl") &&
-                            !it.name.startsWith("examplemod"))
+                            !it.name.startsWith("examplemod") &&
+                            !it.name.startsWith("error") &&
+                            !it.name.startsWith("mixinex"))
         }
     }
     into(layout.buildDirectory.dir("libraries/"))
@@ -28,7 +30,8 @@ tasks.create<JavaExec>("run") {
 
     mainClass.set("hfnl.launch.Main")
 
-    classpath = sourceSets["main"].runtimeClasspath + files(tasks.jar.get().archiveFile)
+    //classpath = sourceSets["main"].runtimeClasspath + files(tasks.jar.get().archiveFile)
+    classpath = files(tasks.jar.get().archiveFile)
 
 
     workingDir = rootProject.rootDir.resolve("run")
@@ -43,10 +46,11 @@ tasks.create<JavaExec>("run") {
     systemProperties.set("hfnl.disable.warning", true)
 
     val jvmArgsList = mutableListOf<String>()
-    if(!javaVersion.isJava8){
+    if (!javaVersion.isJava8) {
         jvmArgsList.addAll(
             listOf(
                 "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+                "--add-opens", "java.base/java.net=ALL-UNNAMED",
                 "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED",
                 "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED",
                 "--add-opens", "javafx.base/com.sun.javafx.binding=ALL-UNNAMED",
