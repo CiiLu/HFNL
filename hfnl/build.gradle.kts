@@ -30,8 +30,7 @@ tasks.create<JavaExec>("run") {
 
     mainClass.set("hfnl.launch.Main")
 
-    //classpath = sourceSets["main"].runtimeClasspath + files(tasks.jar.get().archiveFile)
-    classpath = files(tasks.jar.get().archiveFile)
+    classpath = sourceSets["main"].runtimeClasspath + files(tasks.jar.get().archiveFile)
 
 
     workingDir = rootProject.rootDir.resolve("run")
