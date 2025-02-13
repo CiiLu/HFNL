@@ -11,6 +11,7 @@
 package hfnl.mod.pages;
 
 import hfnl.mod.HFNLI18n;
+import hfnl.mod.HFNLUtils;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
@@ -64,22 +65,24 @@ public class HFNLModPage extends StackPane {
 
     private void configureJavaMod(IconedTwoLineListItem mod) {
         mod.setExternalLink(System.getProperty("java.vendor.url"));
-        mod.getTags().addAll("ID: java", HFNLI18n.getString("hfnl.vendor") + ": " + System.getProperty("java.vendor"), HFNLI18n.getString("hfnl.version") + ": " + System.getProperty("java.version"));
-        mod.setTitle(System.getProperty("java.runtime.name"));
-        mod.setSubtitle(System.getProperty("sun.management.compiler"));
-        mod.setImage(FXUtils.newBuiltinImage("assets/img/command.png"));
+        mod.getTags().addAll("ID: java", HFNLI18n.getString("hfnl.version") + ": " + System.getProperty("java.version"));
+        mod.setTitle("Java");
+        mod.setSubtitle(System.getProperty("java.runtime.name")+" "+HFNLI18n.getString("hfnl.vendor") + ": " + System.getProperty("java.vendor"));
+        mod.setImage(HFNLUtils.getBuiltinImage("assets/img/command.png"));
     }
 
 
     private void configureRegularMod(IconedTwoLineListItem mod, ModMetadata metadata) {
         Optional<String> iconPath = metadata.getIconPath(0);
         if (iconPath.isPresent()) {
-            mod.setImage(FXUtils.newBuiltinImage(iconPath.get()));
+            mod.setImage(HFNLUtils.getBuiltinImage(iconPath.get()));
         } else {
             setDefaultImage(mod, metadata.getId());
         }
-
-        setModExternalLink(mod, metadata);
+        if("hmcl".equals(metadata.getId())) {
+            mod.setExternalLink("https://github.com/HMCL-dev/HMCL");
+        }
+        mod.setExternalLink(String.valueOf(metadata.getContact().get("homepage")));
         mod.getTags().add(HFNLI18n.getString("hfnl.version") + ":" + metadata.getVersion());
         mod.setTitle(metadata.getName());
         mod.setSubtitle(metadata.getDescription());
@@ -88,21 +91,13 @@ public class HFNLModPage extends StackPane {
     private void setDefaultImage(IconedTwoLineListItem mod, String modId) {
         switch (modId) {
             case "hfnl":
-                mod.setImage(FXUtils.newBuiltinImage("/assets/img/furnace.png"));
+                mod.setImage(HFNLUtils.getBuiltinImage("/assets/img/furnace.png"));
                 break;
             case "mixinextras":
-                mod.setImage(FXUtils.newBuiltinImage("/assets/img/chest.png"));
+                mod.setImage((HFNLUtils.getBuiltinImage("/assets/img/chest.png")));
                 break;
             default:
-                mod.setImage(FXUtils.newBuiltinImage("/assets/img/craft_table.png"));
+                mod.setImage(HFNLUtils.getBuiltinImage("/assets/img/craft_table.png"));
         }
-    }
-
-    private void setModExternalLink(IconedTwoLineListItem mod, ModMetadata metadata) {
-        metadata.getContact().get("homepage").ifPresentOrElse(mod::setExternalLink, () -> {
-            if ("hmcl".equals(metadata.getId())) {
-                mod.setExternalLink("https://github.com/HMCL-dev/HMCL");
-            }
-        });
     }
 }

@@ -68,7 +68,3 @@ tasks.create<JavaExec>("run") {
 
     jvmArgs(jvmArgsList)
 }
-
-java {
-
-}
