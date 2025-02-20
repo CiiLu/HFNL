@@ -51,18 +51,10 @@ public class HFNLSettingPage extends DecoratorAnimatedPage implements DecoratorP
         FXUtils.onChangeAndOperate(tab.getSelectionModel().selectedItemProperty(), newValue -> transitionPane.setContent(newValue.getNode(), ContainerAnimations.FADE));
 
         {
+            //.addNavigationDrawerTab(this.tab, this.settingsTab, I18n.i18n("settings.launcher.general"), SVG.APPLICATION_OUTLINE)
             AdvancedListBox sideBar = new AdvancedListBox()
-                    .addNavigationDrawerItem(aboutItem -> {
-                        aboutItem.setTitle(HFNLI18n.getString("hfnl.abouthfnl"));
-                        aboutItem.setLeftGraphic(wrap(SVG.INFORMATION_OUTLINE));
-                        aboutItem.activeProperty().bind(tab.getSelectionModel().selectedItemProperty().isEqualTo(aboutTab));
-                        aboutItem.setOnAction(e -> tab.select(aboutTab));
-                    }).addNavigationDrawerItem(modItem -> {
-                        modItem.setTitle(HFNLI18n.getString("hfnl.mod"));
-                        modItem.setLeftGraphic(wrap(SVG.PUZZLE));
-                        modItem.activeProperty().bind(tab.getSelectionModel().selectedItemProperty().isEqualTo(modTab));
-                        modItem.setOnAction(e -> tab.select(modTab));
-                    });
+                    .addNavigationDrawerTab(this.tab, this.aboutTab, HFNLI18n.getString("hfnl.about"), SVG.INFORMATION_OUTLINE)
+                    .addNavigationDrawerTab(this.tab, this.modTab, HFNLI18n.getString("hfnl.mod"), SVG.PUZZLE);
 
             FXUtils.setLimitWidth(sideBar, 200);
             setLeft(sideBar);
