@@ -12,34 +12,27 @@
 package hfnl.launch;
 
 import hfnl.launch.utils.FileLogger;
-import jdk.internal.loader.BuiltinClassLoader;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.impl.launch.knot.Knot;
 
+import java.io.File;
 import java.io.IOException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
-import java.lang.module.Configuration;
-import java.lang.module.ModuleFinder;
-import java.lang.module.ModuleReference;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         System.getProperties().putIfAbsent("fabric.development", "true");
-
         String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss"));
-        FileLogger logger = new FileLogger("HFNL Logger", "logs/" + time + ".log");
+        File logFile = new File("logs/" + time + ".log");
 
-        try {
+
+        FileLogger logger = new FileLogger(System.out, logFile);
+
+        try (logger) {
+            System.setOut(logger);
+            System.setErr(logger);
             Knot.launch(args, EnvType.CLIENT);
-        } finally {
-            logger.close();
         }
     }
 }
