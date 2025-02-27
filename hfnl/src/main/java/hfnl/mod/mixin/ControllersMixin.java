@@ -12,7 +12,7 @@ package hfnl.mod.mixin;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialogLayout;
-import hfnl.mod.HFNLI18n;
+import hfnl.mod.I18n;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.jackhuang.hmcl.ui.Controllers;
@@ -30,7 +30,7 @@ public class ControllersMixin {
         JFXDialogLayout dialog = new JFXDialogLayout();
 
         dialog.setHeading(new Label("Hello Furnace Launcher"));
-        dialog.setBody(new Label(HFNLI18n.getString("hfnl.notice")));
+        dialog.setBody(new Label(I18n.get("hfnl.notice")));
 
         JFXHyperlink hmclRepoLink = new JFXHyperlink("HMCL Github");
         hmclRepoLink.setExternalLink("https://github.com/HMCL-dev/HMCL/");

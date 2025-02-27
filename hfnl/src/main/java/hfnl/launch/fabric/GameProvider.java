@@ -11,7 +11,6 @@
 package hfnl.launch.fabric;
 
 import net.fabricmc.loader.impl.FormattedException;
-import net.fabricmc.loader.impl.game.GameProvider;
 import net.fabricmc.loader.impl.game.GameProviderHelper;
 import net.fabricmc.loader.impl.game.patch.GameTransformer;
 import net.fabricmc.loader.impl.launch.FabricLauncher;
@@ -28,11 +27,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class HMCLGameProvider implements GameProvider {
+public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider {
+    {
+
+    }
     private static final String[] ENTRY_POINTS = {"org.jackhuang.hmcl.Main"};
     private static final Set<String> SENSITIVE_ARGS = new HashSet<>();
     private static final StringVersion GAME_VERSION = new StringVersion("0.0.0");
-    private static final GameTransformer TRANSFORMER = new GameTransformer(new HMCLEntrypointPatch());
+    private static final GameTransformer TRANSFORMER = new GameTransformer(new EntrypointPatch());
 
     private Arguments arguments;
     private String entryPoint;

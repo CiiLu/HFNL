@@ -16,9 +16,9 @@ import org.jackhuang.hmcl.util.logging.Logger;
 
 import java.util.ResourceBundle;
 
-public class HFNLI18n {
+public class I18n {
 
-    private static final String BUNDLE_NAME = "assets/lang/HFNLI18n";
+    private static final String BUNDLE_NAME = "assets/lang/I18n";
 
     private static ResourceBundle messages;
 
@@ -31,7 +31,7 @@ public class HFNLI18n {
         messages = ResourceBundle.getBundle(BUNDLE_NAME, ConfigHolder.config().getLocalization().getLocale());
     }
 
-    public static String getString(String key) {
+    public static String get(String key) {
         if (messages == null) {
             initialize();
         }

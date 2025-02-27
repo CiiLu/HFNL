@@ -12,8 +12,6 @@
 package hfnl.launch;
 
 import hfnl.launch.utils.FileLogger;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.impl.launch.knot.Knot;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,12 +25,10 @@ public class Main {
         File logFile = new File("logs/" + time + ".log");
 
 
-        FileLogger logger = new FileLogger(System.out, logFile);
-
-        try (logger) {
-            System.setOut(logger);
+        try (FileLogger logger = new FileLogger(System.out, logFile)) {
             System.setErr(logger);
-            Knot.launch(args, EnvType.CLIENT);
+            System.setOut(logger);
+            new Launcher().run(args);
         }
     }
 }

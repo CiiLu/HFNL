@@ -22,7 +22,7 @@ import java.util.ListIterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class HMCLEntrypointPatch extends GamePatch {
+public class EntrypointPatch extends GamePatch {
 
     @Override
     public void process(FabricLauncher launcher, Function<String, ClassNode> classSource, Consumer<ClassNode> classEmitter) {
@@ -42,7 +42,7 @@ public class HMCLEntrypointPatch extends GamePatch {
 
         ListIterator<AbstractInsnNode> it = initMethod.instructions.iterator();
 
-        it.add(new MethodInsnNode(Opcodes.INVOKESTATIC, HMCLHooks.class.getName().replace('.', '/'), "init", "()V", false));
+        it.add(new MethodInsnNode(Opcodes.INVOKESTATIC, Hooks.class.getName().replace('.', '/'), "init", "()V", false));
 
         classEmitter.accept(mainClass);
     }

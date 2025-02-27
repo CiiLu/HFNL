@@ -10,7 +10,7 @@
  * */
 package hfnl.mod.pages;
 
-import hfnl.mod.HFNLI18n;
+import hfnl.mod.I18n;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import org.jackhuang.hmcl.setting.ConfigHolder;
@@ -28,21 +28,21 @@ import org.jackhuang.hmcl.util.logging.Logger;
 
 import static org.jackhuang.hmcl.util.i18n.I18n.i18n;
 
-public class HFNLSettingPage extends DecoratorAnimatedPage implements DecoratorPage, PageAware {
+public class SettingPage extends DecoratorAnimatedPage implements DecoratorPage, PageAware {
     private final ReadOnlyObjectWrapper<State> state = new ReadOnlyObjectWrapper<>(State.fromTitle(i18n("settings")));
     private final TabHeader tab;
-    private final TabHeader.Tab<HFNLAboutPage> aboutTab = new TabControl.Tab<>("aboutPage");
-    private final TabHeader.Tab<HFNLModPage> modTab = new TabHeader.Tab<>("modPage");
+    private final TabHeader.Tab<AboutPage> aboutTab = new TabControl.Tab<>("aboutPage");
+    private final TabHeader.Tab<ModPage> modTab = new TabHeader.Tab<>("modPage");
     private final TransitionPane transitionPane = new TransitionPane();
 
-    public HFNLSettingPage() {
+    public SettingPage() {
         try {
             ConfigHolder.init();
         } catch (Exception e) {
             Logger.LOG.error("", e);
         }
-        aboutTab.setNodeSupplier(HFNLAboutPage::new);
-        modTab.setNodeSupplier(HFNLModPage::new);
+        aboutTab.setNodeSupplier(AboutPage::new);
+        modTab.setNodeSupplier(ModPage::new);
         tab = new TabHeader(aboutTab, modTab);
 
         tab.select(aboutTab);
@@ -52,8 +52,8 @@ public class HFNLSettingPage extends DecoratorAnimatedPage implements DecoratorP
         {
             //.addNavigationDrawerTab(this.tab, this.settingsTab, I18n.i18n("settings.launcher.general"), SVG.APPLICATION_OUTLINE)
             AdvancedListBox sideBar = new AdvancedListBox()
-                    .addNavigationDrawerTab(this.tab, this.aboutTab, HFNLI18n.getString("hfnl.about"), SVG.INFORMATION_OUTLINE)
-                    .addNavigationDrawerTab(this.tab, this.modTab, HFNLI18n.getString("hfnl.mod"), SVG.PUZZLE);
+                    .addNavigationDrawerTab(this.tab, this.aboutTab, I18n.get("hfnl.about"), SVG.INFORMATION_OUTLINE)
+                    .addNavigationDrawerTab(this.tab, this.modTab, I18n.get("hfnl.mod"), SVG.PUZZLE);
 
             FXUtils.setLimitWidth(sideBar, 200);
             setLeft(sideBar);

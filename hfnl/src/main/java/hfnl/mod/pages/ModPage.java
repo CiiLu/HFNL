@@ -10,8 +10,7 @@
  * */
 package hfnl.mod.pages;
 
-import hfnl.mod.HFNLI18n;
-import hfnl.mod.HFNLUtils;
+import hfnl.mod.I18n;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
@@ -27,17 +26,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-public class HFNLModPage extends StackPane {
+public class ModPage extends StackPane {
     private final ComponentList mods = new ComponentList();
 
-    public HFNLModPage() {
+    public ModPage() {
         List<ModContainer> modContainers = FabricLoader.getInstance().getAllMods().stream().sorted(Comparator.comparing(modContainer -> modContainer.getMetadata().getName())).toList();
 
         modContainers.forEach(this::addModToComponentList);
 
         VBox content = new VBox(16);
         content.setPadding(new Insets(10));
-        content.getChildren().addAll(ComponentList.createComponentListTitle(HFNLI18n.getString("hfnl.mod")), mods);
+        content.getChildren().addAll(ComponentList.createComponentListTitle(I18n.get("hfnl.mod")), mods);
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setFitToWidth(true);
         FXUtils.smoothScrolling(scrollPane);
@@ -65,17 +64,17 @@ public class HFNLModPage extends StackPane {
 
     private void configureJavaMod(IconedTwoLineListItem mod) {
         mod.setExternalLink(System.getProperty("java.vendor.url"));
-        mod.getTags().addAll("ID: java", HFNLI18n.getString("hfnl.version") + ": " + System.getProperty("java.version"));
+        mod.getTags().addAll("ID: java", I18n.get("hfnl.version") + ": " + System.getProperty("java.version"));
         mod.setTitle("Java");
-        mod.setSubtitle(System.getProperty("java.runtime.name")+" "+HFNLI18n.getString("hfnl.vendor") + ": " + System.getProperty("java.vendor"));
-        mod.setImage(HFNLUtils.getBuiltinImage("assets/img/command.png"));
+        mod.setSubtitle(System.getProperty("java.runtime.name")+" "+ I18n.get("hfnl.vendor") + ": " + System.getProperty("java.vendor"));
+        mod.setImage(FXUtils.newBuiltinImage("assets/img/command.png"));
     }
 
 
     private void configureRegularMod(IconedTwoLineListItem mod, ModMetadata metadata) {
         Optional<String> iconPath = metadata.getIconPath(0);
         if (iconPath.isPresent()) {
-            mod.setImage(HFNLUtils.getBuiltinImage(iconPath.get()));
+            mod.setImage(FXUtils.newBuiltinImage(iconPath.get()));
         } else {
             setDefaultImage(mod, metadata.getId());
         }
@@ -83,7 +82,7 @@ public class HFNLModPage extends StackPane {
             mod.setExternalLink("https://github.com/HMCL-dev/HMCL");
         }
         mod.setExternalLink(String.valueOf(metadata.getContact().get("homepage")));
-        mod.getTags().add(HFNLI18n.getString("hfnl.version") + ":" + metadata.getVersion());
+        mod.getTags().add(I18n.get("hfnl.version") + ":" + metadata.getVersion());
         mod.setTitle(metadata.getName());
         mod.setSubtitle(metadata.getDescription());
     }
@@ -91,13 +90,13 @@ public class HFNLModPage extends StackPane {
     private void setDefaultImage(IconedTwoLineListItem mod, String modId) {
         switch (modId) {
             case "hfnl":
-                mod.setImage(HFNLUtils.getBuiltinImage("/assets/img/furnace.png"));
+                mod.setImage(FXUtils.newBuiltinImage("/assets/img/furnace.png"));
                 break;
             case "mixinextras":
-                mod.setImage((HFNLUtils.getBuiltinImage("/assets/img/chest.png")));
+                mod.setImage((FXUtils.newBuiltinImage("/assets/img/chest.png")));
                 break;
             default:
-                mod.setImage(HFNLUtils.getBuiltinImage("/assets/img/craft_table.png"));
+                mod.setImage(FXUtils.newBuiltinImage("/assets/img/craft_table.png"));
         }
     }
 }

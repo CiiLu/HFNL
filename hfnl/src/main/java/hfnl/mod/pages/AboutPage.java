@@ -10,7 +10,7 @@
  * */
 package hfnl.mod.pages;
 
-import hfnl.mod.HFNLI18n;
+import hfnl.mod.I18n;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
@@ -20,19 +20,18 @@ import net.fabricmc.loader.impl.FabricLoaderImpl;
 import org.jackhuang.hmcl.ui.FXUtils;
 import org.jackhuang.hmcl.ui.construct.ComponentList;
 import org.jackhuang.hmcl.ui.construct.IconedTwoLineListItem;
-import org.jackhuang.hmcl.ui.main.AboutPage;
 
 import java.lang.reflect.Method;
 
-public final class HFNLAboutPage extends StackPane {
-    public HFNLAboutPage() {
+public final class AboutPage extends StackPane {
+    public AboutPage() {
         ComponentList about = new ComponentList();
         {
             IconedTwoLineListItem launcher = new IconedTwoLineListItem();
             launcher.setImage(FXUtils.newBuiltinImage("/assets/img/furnace.png"));
             launcher.setTitle("Hello Furnace Launcher");
             launcher.setExternalLink("https://github.com/ciilu/HFNL");
-            launcher.setSubtitle(FabricLoader.getInstance().getAllMods().size() + " " + HFNLI18n.getString("hfnl.loaddedmod"));
+            launcher.setSubtitle(FabricLoader.getInstance().getAllMods().size() + " " + I18n.get("hfnl.loaddedmod"));
 
             IconedTwoLineListItem fabric = new IconedTwoLineListItem();
             fabric.setImage(FXUtils.newBuiltinImage("/assets/img/fabric.png"));
@@ -45,7 +44,7 @@ public final class HFNLAboutPage extends StackPane {
 
         ComponentList deps;
         try {
-            Class<?> clazz = AboutPage.class;
+            Class<?> clazz = org.jackhuang.hmcl.ui.main.AboutPage.class;
             Method method = clazz.getDeclaredMethod("loadIconedTwoLineList", String.class);
             method.setAccessible(true);
             deps = (ComponentList) method.invoke(clazz, "/assets/about/hfnldeps.json");
@@ -57,8 +56,8 @@ public final class HFNLAboutPage extends StackPane {
         VBox content = new VBox(16);
         content.setPadding(new Insets(10));
         content.getChildren().setAll(
-                ComponentList.createComponentListTitle(HFNLI18n.getString("hfnl.about")), about,
-                ComponentList.createComponentListTitle(HFNLI18n.getString("hfnl.dep")), deps);
+                ComponentList.createComponentListTitle(I18n.get("hfnl.about")), about,
+                ComponentList.createComponentListTitle(I18n.get("hfnl.dep")), deps);
 
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setFitToWidth(true);

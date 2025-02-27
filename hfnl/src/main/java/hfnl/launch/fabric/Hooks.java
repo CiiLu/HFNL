@@ -16,7 +16,7 @@ import net.fabricmc.loader.impl.FabricLoaderImpl;
 
 import java.nio.file.Paths;
 
-public final class HMCLHooks {
+public final class Hooks {
 
     public static void init() {
         FabricLoaderImpl fabricLoader = FabricLoaderImpl.INSTANCE;

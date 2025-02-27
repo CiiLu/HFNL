@@ -11,7 +11,7 @@
 package hfnl.mod.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import hfnl.mod.pages.HFNLSettingPage;
+import hfnl.mod.pages.SettingPage;
 import org.jackhuang.hmcl.ui.Controllers;
 import org.jackhuang.hmcl.ui.SVG;
 import org.jackhuang.hmcl.ui.construct.AdvancedListBox;
@@ -32,7 +32,7 @@ public abstract class RootPageMixin {
         hfnlSettingItem.setLeftGraphic(wrap(SVG.SCRIPT));
         hfnlSettingItem.setActionButtonVisible(false);
         hfnlSettingItem.setTitle("HFNL "+I18n.i18n("settings"));
-        HFNLSettingPage hfnlSettingPage = new HFNLSettingPage();
+        SettingPage hfnlSettingPage = new SettingPage();
         hfnlSettingItem.setOnAction(e -> Controllers.navigate(hfnlSettingPage));
         sidebar.add(hfnlSettingItem);
     }
