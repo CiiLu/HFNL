@@ -28,9 +28,6 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider {
-    {
-
-    }
     private static final String[] ENTRY_POINTS = {"org.jackhuang.hmcl.Main"};
     private static final Set<String> SENSITIVE_ARGS = new HashSet<>();
     private static final StringVersion GAME_VERSION = new StringVersion("0.0.0");
@@ -62,10 +59,12 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
 
     @Override
     public Collection<BuiltinMod> getBuiltinMods() {
+        HashMap<String,String> contactHashmap = new HashMap<>();
+        contactHashmap.put("homepage","https://github.com/HMCL-dev/HMCL");
         BuiltinModMetadata metadata = (BuiltinModMetadata) new BuiltinModMetadata.Builder(getGameId(), getNormalizedGameVersion())
                 .setName(getGameName())
                 .addAuthor("HMCL", new HashMap<>())
-                .setContact(new ContactInformationImpl(new HashMap<>()))
+                .setContact(new ContactInformationImpl(contactHashmap))
                 .setDescription("Hello Minecraft! Launcher")
                 .addIcon(0,"assets/img/icon.png")
                 .build();

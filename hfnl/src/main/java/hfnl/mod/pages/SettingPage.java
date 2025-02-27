@@ -50,7 +50,6 @@ public class SettingPage extends DecoratorAnimatedPage implements DecoratorPage,
         FXUtils.onChangeAndOperate(tab.getSelectionModel().selectedItemProperty(), newValue -> transitionPane.setContent(newValue.getNode(), ContainerAnimations.FADE));
 
         {
-            //.addNavigationDrawerTab(this.tab, this.settingsTab, I18n.i18n("settings.launcher.general"), SVG.APPLICATION_OUTLINE)
             AdvancedListBox sideBar = new AdvancedListBox()
                     .addNavigationDrawerTab(this.tab, this.aboutTab, I18n.get("hfnl.about"), SVG.INFORMATION_OUTLINE)
                     .addNavigationDrawerTab(this.tab, this.modTab, I18n.get("hfnl.mod"), SVG.PUZZLE);

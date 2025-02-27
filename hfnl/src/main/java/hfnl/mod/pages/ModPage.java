@@ -78,9 +78,6 @@ public class ModPage extends StackPane {
         } else {
             setDefaultImage(mod, metadata.getId());
         }
-        if("hmcl".equals(metadata.getId())) {
-            mod.setExternalLink("https://github.com/HMCL-dev/HMCL");
-        }
         mod.setExternalLink(String.valueOf(metadata.getContact().get("homepage")));
         mod.getTags().add(I18n.get("hfnl.version") + ":" + metadata.getVersion());
         mod.setTitle(metadata.getName());
