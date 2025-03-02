@@ -29,8 +29,7 @@ import java.util.*;
 
 public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider {
     private static final String[] ENTRY_POINTS = {"org.jackhuang.hmcl.Main"};
-    private static final Set<String> SENSITIVE_ARGS = new HashSet<>();
-    private static final StringVersion GAME_VERSION = new StringVersion("0.0.0");
+    private static StringVersion GAME_VERSION = new StringVersion("3.6");
     private static final GameTransformer TRANSFORMER = new GameTransformer(new EntrypointPatch());
 
     private Arguments arguments;
@@ -63,7 +62,7 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
         contactHashmap.put("homepage","https://github.com/HMCL-dev/HMCL");
         BuiltinModMetadata metadata = (BuiltinModMetadata) new BuiltinModMetadata.Builder(getGameId(), getNormalizedGameVersion())
                 .setName(getGameName())
-                .addAuthor("HMCL", new HashMap<>())
+                .addAuthor("HMCL-dev", new HashMap<>())
                 .setContact(new ContactInformationImpl(contactHashmap))
                 .setDescription("Hello Minecraft! Launcher")
                 .addIcon(0,"assets/img/icon.png")
@@ -78,7 +77,7 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
 
     @Override
     public Path getLaunchDirectory() {
-        return Paths.get(".");
+        return Paths.get("./");
     }
 
     @Override
@@ -157,30 +156,7 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
             return new String[0];
         }
 
-        String[] ret = arguments.toArray();
-        if (!sanitize) {
-            return ret;
-        }
-
-        int writeIdx = 0;
-
-        for (int i = 0; i < ret.length; i++) {
-            String arg = ret[i];
-
-            if (i + 1 < ret.length
-                    && arg.startsWith("--")
-                    && SENSITIVE_ARGS.contains(arg.substring(2).toLowerCase(Locale.ENGLISH))) {
-                i++;
-            } else {
-                ret[writeIdx++] = arg;
-            }
-        }
-
-        if (writeIdx < ret.length) {
-            ret = Arrays.copyOf(ret, writeIdx);
-        }
-
-        return ret;
+        return arguments.toArray();
     }
 
     private void processArguments(Arguments arguments) {

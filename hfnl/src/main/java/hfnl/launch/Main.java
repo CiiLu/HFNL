@@ -15,6 +15,8 @@ import hfnl.launch.utils.FileLogger;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,6 +24,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         System.getProperties().putIfAbsent("fabric.development", "true");
         String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss"));
+        File logPath = new File("./logs/");
+
+        if (!logPath.exists()) {
+            logPath.mkdirs();
+        }
+
         File logFile = new File("logs/" + time + ".log");
 
 

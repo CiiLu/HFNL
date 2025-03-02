@@ -7,6 +7,7 @@
 本项目不包括 HMCL 本体，使用时需要用户自行下载 HMCL 并添加到 Java 系统变量 `fabric.gameJarPath` 中。
 在开发环境时会自动从 maven 下载 HMCL 本体并添加到上述变量中。
 
+GameProvider 相关实现参考 https://github.com/PseudoDistant/ExampleGameProvider
 ## 使用
 
 ```shell

@@ -25,12 +25,17 @@ import org.jackhuang.hmcl.ui.construct.IconedTwoLineListItem;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ModPage extends StackPane {
     private final ComponentList mods = new ComponentList();
 
     public ModPage() {
-        List<ModContainer> modContainers = FabricLoader.getInstance().getAllMods().stream().sorted(Comparator.comparing(modContainer -> modContainer.getMetadata().getName())).toList();
+        List<ModContainer> modContainers = FabricLoader.getInstance()
+                .getAllMods()
+                .stream()
+                .sorted(Comparator.comparing(modContainer -> modContainer.getMetadata().getName()))
+                .collect(Collectors.toList());
 
         modContainers.forEach(this::addModToComponentList);
 
