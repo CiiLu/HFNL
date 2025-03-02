@@ -4,7 +4,6 @@
   "package": "hfnl.mod.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ControllersMixin",
     "RootPageMixin",
     "UpdateHandlerMixin"
   ],
