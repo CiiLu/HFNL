@@ -69,9 +69,11 @@ public class ModPage extends StackPane {
 
     private void configureJavaMod(IconedTwoLineListItem mod) {
         mod.setExternalLink(System.getProperty("java.vendor.url"));
-        mod.getTags().addAll("ID: java", I18n.get("hfnl.version") + ": " + System.getProperty("java.version"));
+        mod.getTags().add("ID: java");
+        mod.getTags().add(I18n.get("hfnl.version") + ": " + System.getProperty("java.version"));
+        mod.getTags().add(I18n.get("hfnl.vendor") + ": " + System.getProperty("java.vendor"));
         mod.setTitle("Java");
-        mod.setSubtitle(System.getProperty("java.runtime.name")+" "+ I18n.get("hfnl.vendor") + ": " + System.getProperty("java.vendor"));
+        mod.setSubtitle(System.getProperty("java.runtime.name"));
         mod.setImage(FXUtils.newBuiltinImage("assets/img/command.png"));
     }
 
@@ -83,22 +85,20 @@ public class ModPage extends StackPane {
         } else {
             setDefaultImage(mod, metadata.getId());
         }
-        mod.setExternalLink(String.valueOf(metadata.getContact().get("homepage")));
+        if(metadata.getContact().get("homepage").isPresent()) {
+            mod.setExternalLink(metadata.getContact().get("homepage").get());
+        }
+        mod.getTags().add("ID: " + metadata.getId());
         mod.getTags().add(I18n.get("hfnl.version") + ":" + metadata.getVersion());
         mod.setTitle(metadata.getName());
         mod.setSubtitle(metadata.getDescription());
     }
 
     private void setDefaultImage(IconedTwoLineListItem mod, String modId) {
-        switch (modId) {
-            case "hfnl":
-                mod.setImage(FXUtils.newBuiltinImage("/assets/img/furnace.png"));
-                break;
-            case "mixinextras":
-                mod.setImage((FXUtils.newBuiltinImage("/assets/img/chest.png")));
-                break;
-            default:
-                mod.setImage(FXUtils.newBuiltinImage("/assets/img/craft_table.png"));
+        if ("mixinextras".equals(modId)) {
+            mod.setImage((FXUtils.newBuiltinImage("/assets/img/chest.png")));
+        } else {
+            mod.setImage(FXUtils.newBuiltinImage("/assets/img/craft_table.png"));
         }
     }
 }
