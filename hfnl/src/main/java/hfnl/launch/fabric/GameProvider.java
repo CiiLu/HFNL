@@ -12,6 +12,8 @@ package hfnl.launch.fabric;
 
 import net.fabricmc.loader.impl.FormattedException;
 import net.fabricmc.loader.impl.game.GameProviderHelper;
+import net.fabricmc.loader.impl.game.minecraft.Log4jLogHandler;
+import net.fabricmc.loader.impl.game.minecraft.Slf4jLogHandler;
 import net.fabricmc.loader.impl.game.patch.GameTransformer;
 import net.fabricmc.loader.impl.launch.FabricLauncher;
 import net.fabricmc.loader.impl.metadata.BuiltinModMetadata;
@@ -34,7 +36,7 @@ import java.util.Map;
 public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider {
     private static final String[] ENTRY_POINTS = {"org.jackhuang.hmcl.Main"};
     private static final GameTransformer TRANSFORMER = new GameTransformer(new EntrypointPatch());
-    private static String GAME_VERSION = Metadata.VERSION;
+    private static final String GAME_VERSION = Metadata.VERSION;
     private Arguments arguments;
     private String entryPoint;
     private Path gameJar;

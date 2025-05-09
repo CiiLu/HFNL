@@ -2,8 +2,9 @@
   "required": true,
   "minVersion": "0.8",
   "package": "hfnl.mod.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_11",
   "mixins": [
+    "LoggerMixin",
     "RootPageMixin",
     "UpdateHandlerMixin"
   ],

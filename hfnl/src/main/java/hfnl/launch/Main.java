@@ -12,6 +12,8 @@
 package hfnl.launch;
 
 import hfnl.launch.utils.FileLogger;
+import net.fabricmc.loader.impl.game.minecraft.Slf4jLogHandler;
+import net.fabricmc.loader.impl.util.log.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,6 +70,7 @@ public class ControllersMixin {
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        Log.init(new Slf4jLogHandler());
         System.getProperties().putIfAbsent("fabric.development", "true");
         String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss"));
         File logPath = new File("./logs/");

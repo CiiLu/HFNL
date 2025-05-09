@@ -25,9 +25,8 @@ public class I18n {
     public static void initialize() {
         try {
             ConfigHolder.init();
-        } catch (Exception e) {
-            Logger.LOG.error("",e);
-        }
+        } catch (Exception ignored) {}
+
         messages = ResourceBundle.getBundle(BUNDLE_NAME, ConfigHolder.config().getLocalization().getLocale());
     }
 

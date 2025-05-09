@@ -32,7 +32,6 @@ tasks.create<JavaExec>("run") {
 
     classpath = sourceSets["main"].runtimeClasspath + files(tasks.jar.get().archiveFile)
 
-
     workingDir = rootProject.rootDir.resolve("run")
     if (!workingDir.exists()) {
         workingDir.mkdirs()
@@ -41,13 +40,21 @@ tasks.create<JavaExec>("run") {
     systemProperties.set("hfnl.disable.warning", true)
 
     val jvmArgsList = mutableListOf<String>()
-    if (!javaVersion.isJava8) {
+    jvmArgsList.addAll(
+        listOf(
+            "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+            "--add-opens", "java.base/java.net=ALL-UNNAMED",
+            "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED",
+            "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED",
+            "--add-opens", "jdk.attach/sun.tools.attach=ALL-UNNAMED"
+        )
+    )
+
+
+    try {
+        Class.forName("javafx.stage.Stage")
         jvmArgsList.addAll(
             listOf(
-                "--add-opens", "java.base/java.lang=ALL-UNNAMED",
-                "--add-opens", "java.base/java.net=ALL-UNNAMED",
-                "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED",
-                "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED",
                 "--add-opens", "javafx.base/com.sun.javafx.binding=ALL-UNNAMED",
                 "--add-opens", "javafx.base/com.sun.javafx.event=ALL-UNNAMED",
                 "--add-opens", "javafx.base/com.sun.javafx.runtime=ALL-UNNAMED",
@@ -57,10 +64,9 @@ tasks.create<JavaExec>("run") {
                 "--add-opens", "javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED",
                 "--add-opens", "javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED",
                 "--add-opens", "javafx.controls/javafx.scene.control.skin=ALL-UNNAMED",
-                "--add-opens", "jdk.attach/sun.tools.attach=ALL-UNNAMED"
             )
         )
-    }
+    } catch (_: Throwable) {}
 
     jvmArgs(jvmArgsList)
 }

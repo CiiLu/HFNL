@@ -18,6 +18,7 @@ import org.jackhuang.hmcl.ui.construct.AdvancedListBox;
 import org.jackhuang.hmcl.ui.construct.AdvancedListItem;
 import org.jackhuang.hmcl.util.i18n.I18n;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,13 +27,14 @@ import static org.jackhuang.hmcl.ui.versions.VersionPage.wrap;
 
 @Mixin(targets = "org.jackhuang.hmcl.ui.main.RootPage$Skin")
 public abstract class RootPageMixin {
+    @Unique
+    private final SettingPage hfnlSettingPage = new SettingPage();
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(CallbackInfo ci, @Local AdvancedListBox sidebar) {
         AdvancedListItem hfnlSettingItem = new AdvancedListItem();
         hfnlSettingItem.setLeftGraphic(wrap(SVG.SCRIPT));
         hfnlSettingItem.setActionButtonVisible(false);
         hfnlSettingItem.setTitle("HFNL "+I18n.i18n("settings"));
-        SettingPage hfnlSettingPage = new SettingPage();
         hfnlSettingItem.setOnAction(e -> Controllers.navigate(hfnlSettingPage));
         sidebar.add(hfnlSettingItem);
     }

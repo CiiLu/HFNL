@@ -24,7 +24,6 @@ import org.jackhuang.hmcl.ui.construct.TabControl;
 import org.jackhuang.hmcl.ui.construct.TabHeader;
 import org.jackhuang.hmcl.ui.decorator.DecoratorAnimatedPage;
 import org.jackhuang.hmcl.ui.decorator.DecoratorPage;
-import org.jackhuang.hmcl.util.logging.Logger;
 
 import static org.jackhuang.hmcl.util.i18n.I18n.i18n;
 
@@ -38,9 +37,9 @@ public class SettingPage extends DecoratorAnimatedPage implements DecoratorPage,
     public SettingPage() {
         try {
             ConfigHolder.init();
-        } catch (Exception e) {
-            Logger.LOG.error("", e);
+        } catch (Exception ignored) {
         }
+
         aboutTab.setNodeSupplier(AboutPage::new);
         modTab.setNodeSupplier(ModPage::new);
         tab = new TabHeader(aboutTab, modTab);
@@ -49,14 +48,12 @@ public class SettingPage extends DecoratorAnimatedPage implements DecoratorPage,
 
         FXUtils.onChangeAndOperate(tab.getSelectionModel().selectedItemProperty(), newValue -> transitionPane.setContent(newValue.getNode(), ContainerAnimations.FADE));
 
-        {
-            AdvancedListBox sideBar = new AdvancedListBox()
-                    .addNavigationDrawerTab(this.tab, this.aboutTab, I18n.get("hfnl.about"), SVG.INFO)
-                    .addNavigationDrawerTab(this.tab, this.modTab, I18n.get("hfnl.mod"), SVG.GLOBE_BOOK);
+        AdvancedListBox sideBar = new AdvancedListBox()
+                .addNavigationDrawerTab(this.tab, this.aboutTab, I18n.get("hfnl.about"), SVG.INFO)
+                .addNavigationDrawerTab(this.tab, this.modTab, I18n.get("hfnl.mod"), SVG.GLOBE_BOOK);
 
-            FXUtils.setLimitWidth(sideBar, 200);
-            setLeft(sideBar);
-        }
+        FXUtils.setLimitWidth(sideBar, 200);
+        setLeft(sideBar);
 
         setCenter(transitionPane);
     }

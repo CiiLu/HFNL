@@ -85,6 +85,7 @@ public class ModPage extends StackPane {
         } else {
             setDefaultImage(mod, metadata.getId());
         }
+
         if(metadata.getContact().get("homepage").isPresent()) {
             mod.setExternalLink(metadata.getContact().get("homepage").get());
         }

@@ -26,21 +26,20 @@ import java.lang.reflect.Method;
 public final class AboutPage extends StackPane {
     public AboutPage() {
         ComponentList about = new ComponentList();
-        {
-            IconedTwoLineListItem launcher = new IconedTwoLineListItem();
-            launcher.setImage(FXUtils.newBuiltinImage("/assets/img/furnace.png"));
-            launcher.setTitle("Hello Furnace Launcher");
-            launcher.setExternalLink("https://github.com/ciilu/HFNL");
-            launcher.setSubtitle(FabricLoader.getInstance().getAllMods().size() + " " + I18n.get("hfnl.loaddedmod"));
 
-            IconedTwoLineListItem fabric = new IconedTwoLineListItem();
-            fabric.setImage(FXUtils.newBuiltinImage("/assets/img/fabric.png"));
-            fabric.setTitle("Fabric Loader");
-            fabric.setSubtitle(FabricLoaderImpl.VERSION);
-            fabric.setExternalLink("https://github.com/FabricMC");
+        IconedTwoLineListItem launcher = new IconedTwoLineListItem();
+        launcher.setImage(FXUtils.newBuiltinImage("/assets/img/furnace.png"));
+        launcher.setTitle("Hello Furnace Launcher");
+        launcher.setExternalLink("https://github.com/ciilu/HFNL");
+        launcher.setSubtitle(FabricLoader.getInstance().getAllMods().size() + " " + I18n.get("hfnl.loaddedmod"));
 
-            about.getContent().setAll(launcher, fabric);
-        }
+        IconedTwoLineListItem fabric = new IconedTwoLineListItem();
+        fabric.setImage(FXUtils.newBuiltinImage("/assets/img/fabric.png"));
+        fabric.setTitle("Fabric Loader");
+        fabric.setSubtitle(FabricLoaderImpl.VERSION);
+        fabric.setExternalLink("https://github.com/FabricMC");
+
+        about.getContent().setAll(launcher, fabric);
 
         ComponentList deps;
         try {
