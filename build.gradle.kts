@@ -20,15 +20,21 @@ subprojects {
         maven { url = uri("https://maven.fabricmc.net/") }
     }
     dependencies {
-        implementation("net.fabricmc:fabric-loader:0.16.10")
+        implementation("net.fabricmc:fabric-loader:0.16.14")
         implementation("net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7")
+
         implementation("org.slf4j:slf4j-api:2.0.9")
+        implementation("org.apache.logging.log4j:log4j-api:2.8.1")
+        implementation("org.apache.logging.log4j:log4j-core:2.8.1")
+
         implementation("io.github.llamalad7:mixinextras-common:0.4.1")
-        implementation("org.ow2.asm:asm:9.7.1")
-        implementation("org.ow2.asm:asm-tree:9.7.1")
-        implementation("org.ow2.asm:asm-commons:9.7.1")
-        implementation("org.ow2.asm:asm-util:9.7.1")
-        implementation("org.ow2.asm:asm-analysis:9.7.1")
+
+        implementation("org.ow2.asm:asm:9.8")
+        implementation("org.ow2.asm:asm-tree:9.8")
+        implementation("org.ow2.asm:asm-commons:9.8")
+        implementation("org.ow2.asm:asm-util:9.8")
+        implementation("org.ow2.asm:asm-analysis:9.8")
+
         implementation("com.google.code.gson:gson:2.11.0")
         implementation("org.glavo.hmcl:hmcl-dev:3.6+")
     }
@@ -37,8 +43,8 @@ subprojects {
         version = "17"
         modules("javafx.controls")
     }
-    java{
-        targetCompatibility=JavaVersion.VERSION_1_8
-        sourceCompatibility=JavaVersion.VERSION_1_8
+    java {
+        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
     }
 }

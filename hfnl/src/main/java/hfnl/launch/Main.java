@@ -68,11 +68,6 @@ public class ControllersMixin {
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        int choice = JOptionPane.showConfirmDialog(null, "本程序为 Hello Minecraft! Launcher 添加了 Fabric Loader 支持。\n如果你不知道你在做什么，请立即退出此程序并下载官方版 HMCL！\n是否继续？", "注意", JOptionPane.YES_NO_OPTION);
-        if(choice != JOptionPane.YES_OPTION){
-            return;
-        }
-
         System.getProperties().putIfAbsent("fabric.development", "true");
         String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss"));
         File logPath = new File("./logs/");

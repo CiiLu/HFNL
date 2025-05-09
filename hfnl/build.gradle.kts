@@ -38,10 +38,6 @@ tasks.create<JavaExec>("run") {
         workingDir.mkdirs()
     }
 
-    val hmclJar = configurations.runtimeClasspath.get().asFileTree.files.firstOrNull {
-        it.name.startsWith("hmcl-dev-") && it.name.endsWith(".jar")
-    }
-    hmclJar?.let { systemProperty("fabric.gameJarPath", it.absolutePath) }
     systemProperties.set("hfnl.disable.warning", true)
 
     val jvmArgsList = mutableListOf<String>()

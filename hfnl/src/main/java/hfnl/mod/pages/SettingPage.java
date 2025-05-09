@@ -51,8 +51,8 @@ public class SettingPage extends DecoratorAnimatedPage implements DecoratorPage,
 
         {
             AdvancedListBox sideBar = new AdvancedListBox()
-                    .addNavigationDrawerTab(this.tab, this.aboutTab, I18n.get("hfnl.about"), SVG.INFORMATION_OUTLINE)
-                    .addNavigationDrawerTab(this.tab, this.modTab, I18n.get("hfnl.mod"), SVG.PUZZLE);
+                    .addNavigationDrawerTab(this.tab, this.aboutTab, I18n.get("hfnl.about"), SVG.INFO)
+                    .addNavigationDrawerTab(this.tab, this.modTab, I18n.get("hfnl.mod"), SVG.GLOBE_BOOK);
 
             FXUtils.setLimitWidth(sideBar, 200);
             setLeft(sideBar);

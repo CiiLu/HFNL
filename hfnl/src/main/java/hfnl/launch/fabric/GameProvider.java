@@ -17,21 +17,24 @@ import net.fabricmc.loader.impl.launch.FabricLauncher;
 import net.fabricmc.loader.impl.metadata.BuiltinModMetadata;
 import net.fabricmc.loader.impl.metadata.ContactInformationImpl;
 import net.fabricmc.loader.impl.util.Arguments;
-import net.fabricmc.loader.impl.util.SystemProperties;
-import net.fabricmc.loader.impl.util.version.StringVersion;
+import net.fabricmc.loader.impl.util.log.Log;
+import net.fabricmc.loader.impl.util.log.LogHandler;
+import org.jackhuang.hmcl.Metadata;
+import org.jackhuang.hmcl.util.io.JarUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider {
     private static final String[] ENTRY_POINTS = {"org.jackhuang.hmcl.Main"};
-    private static StringVersion GAME_VERSION = new StringVersion("3.6");
     private static final GameTransformer TRANSFORMER = new GameTransformer(new EntrypointPatch());
-
+    private static String GAME_VERSION = Metadata.VERSION;
     private Arguments arguments;
     private String entryPoint;
     private Path gameJar;
@@ -48,7 +51,7 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
 
     @Override
     public String getRawGameVersion() {
-        return GAME_VERSION.getFriendlyString();
+        return GAME_VERSION;
     }
 
     @Override
@@ -58,14 +61,14 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
 
     @Override
     public Collection<BuiltinMod> getBuiltinMods() {
-        HashMap<String,String> contactHashmap = new HashMap<>();
-        contactHashmap.put("homepage","https://github.com/HMCL-dev/HMCL");
+        HashMap<String, String> contactHashmap = new HashMap<>();
+        contactHashmap.put("homepage", "https://github.com/HMCL-dev/HMCL");
         BuiltinModMetadata metadata = (BuiltinModMetadata) new BuiltinModMetadata.Builder(getGameId(), getNormalizedGameVersion())
                 .setName(getGameName())
                 .addAuthor("HMCL-dev", new HashMap<>())
                 .setContact(new ContactInformationImpl(contactHashmap))
                 .setDescription("Hello Minecraft! Launcher")
-                .addIcon(0,"assets/img/icon.png")
+                .addIcon(0, "assets/img/icon.png")
                 .build();
         return Collections.singletonList(new BuiltinMod(Collections.singletonList(gameJar), metadata));
     }
@@ -112,7 +115,6 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
         } catch (Exception e) {
             throw new FormattedException("Error locating game", e);
         }
-        processArguments(arguments);
         return true;
     }
 
@@ -155,27 +157,11 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
         if (arguments == null) {
             return new String[0];
         }
-
         return arguments.toArray();
     }
 
-    private void processArguments(Arguments arguments) {
-        if (!arguments.containsKey("gameDir")) {
-            arguments.put("gameDir", getLaunchDirectory(arguments).toAbsolutePath().normalize().toString());
-        }
-    }
-
-    private static Path getLaunchDirectory(Arguments arguments) {
-        return Paths.get(arguments.getOrDefault("gameDir", "."));
-    }
-
     private Path locateGameJar() {
-        String gameJarProperty = System.getProperty(SystemProperties.GAME_JAR_PATH);
-        Path path = Paths.get(gameJarProperty);
-        if (!Files.exists(path)) {
-            throw new RuntimeException("Game jar configured through " + SystemProperties.GAME_JAR_PATH + " system property doesn't exist");
-        }
-        return path;
+        return JarUtils.thisJarPath();
     }
 }
 
