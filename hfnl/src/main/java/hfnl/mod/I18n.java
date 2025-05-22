@@ -12,7 +12,6 @@ package hfnl.mod;
  * */
 
 import org.jackhuang.hmcl.setting.ConfigHolder;
-import org.jackhuang.hmcl.util.logging.Logger;
 
 import java.util.ResourceBundle;
 

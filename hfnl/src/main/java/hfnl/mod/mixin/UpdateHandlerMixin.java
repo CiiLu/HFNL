@@ -10,22 +10,26 @@
  * */
 package hfnl.mod.mixin;
 
+import hfnl.launch.Main;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(targets = "org.jackhuang.hmcl.upgrade.UpdateHandler")
 public abstract class UpdateHandlerMixin {
 
-    @Inject(method = "isNestedApplication", at = @At("HEAD"), cancellable = true)
-    private static void isNestedApplication(CallbackInfoReturnable<Boolean> cir) {
+    /**
+     * @author
+     * @reason
+     */
+    @Overwrite
+    private static boolean isNestedApplication() {
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
-        if (stacktrace.length > 0) {
-            StackTraceElement lastElement = stacktrace[stacktrace.length - 1];
-            if ("hfnl.launch.Main".equals(lastElement.getClassName()) && "main".equals(lastElement.getMethodName())) {
-                cir.setReturnValue(false);
+        for(int i = 0; i < stacktrace.length; ++i) {
+            StackTraceElement element = stacktrace[i];
+            if (Main.class.getName().equals(element.getClassName()) && "main".equals(element.getMethodName())) {
+                return i + 1 != stacktrace.length;
             }
         }
+        return false;
     }
 }
