@@ -23,6 +23,8 @@ import org.jackhuang.hmcl.ui.construct.IconedTwoLineListItem;
 
 import java.lang.reflect.Method;
 
+import static org.jackhuang.hmcl.util.i18n.I18n.i18n;
+
 public final class AboutPage extends StackPane {
     public AboutPage() {
         ComponentList about = new ComponentList();
@@ -55,8 +57,8 @@ public final class AboutPage extends StackPane {
         VBox content = new VBox(16);
         content.setPadding(new Insets(10));
         content.getChildren().setAll(
-                ComponentList.createComponentListTitle(I18n.get("hfnl.about")), about,
-                ComponentList.createComponentListTitle(I18n.get("hfnl.dep")), deps);
+                ComponentList.createComponentListTitle(i18n("about")), about,
+                ComponentList.createComponentListTitle(i18n("about.dependency")), deps);
 
         ScrollPane scrollPane = new ScrollPane(content);
         scrollPane.setFitToWidth(true);

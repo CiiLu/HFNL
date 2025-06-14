@@ -28,14 +28,18 @@ import static org.jackhuang.hmcl.ui.versions.VersionPage.wrap;
 @Mixin(targets = "org.jackhuang.hmcl.ui.main.RootPage$Skin")
 public abstract class RootPageMixin {
     @Unique
-    private final SettingPage hfnlSettingPage = new SettingPage();
+    private SettingPage hfnlSettingPage;
+
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(CallbackInfo ci, @Local AdvancedListBox sidebar) {
         AdvancedListItem hfnlSettingItem = new AdvancedListItem();
         hfnlSettingItem.setLeftGraphic(wrap(SVG.SCRIPT));
         hfnlSettingItem.setActionButtonVisible(false);
-        hfnlSettingItem.setTitle("HFNL "+I18n.i18n("settings"));
-        hfnlSettingItem.setOnAction(e -> Controllers.navigate(hfnlSettingPage));
+        hfnlSettingItem.setTitle("HFNL " + I18n.i18n("settings"));
+        hfnlSettingItem.setOnAction(e -> {
+            if (hfnlSettingPage == null) hfnlSettingPage = new SettingPage();
+            Controllers.navigate(hfnlSettingPage);
+        });
         sidebar.add(hfnlSettingItem);
     }
 }

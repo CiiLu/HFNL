@@ -6,6 +6,7 @@
   "mixins": [
     "LoggerMixin",
     "RootPageMixin",
+    "SpinnerPaneMixin",
     "UpdateHandlerMixin"
   ],
   "client": [
