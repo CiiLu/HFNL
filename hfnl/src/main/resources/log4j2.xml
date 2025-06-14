@@ -2,10 +2,10 @@
 <Configuration status="WARN" monitorInterval="30">
     <Properties>
         <Property name="LOG_PATTERN_COLOR">
-            [%d{HH:mm:ss}] [%highlight{%level/%class}] %msg%n
+            %style{[%d{HH:mm:ss}]}{blue} %highlight{[%t/%level]}{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=green, TRACE=blue} %style{(%logger{1})}{cyan} %highlight{%msg%n}{FATAL=red, ERROR=red, WARN=normal, INFO=normal, DEBUG=normal, TRACE=normal}
         </Property>
         <Property name="LOG_PATTERN">
-            [%d{HH:mm:ss}] [%level/%class] %msg%n
+            [%d{HH:mm:ss}] [%t/%level] (%logger{1}) %msg%n
         </Property>
         <property name="LOG_PATH">logs/${date:yyyy-MM-dd-HH-mm-ss}.log</property>
     </Properties>
