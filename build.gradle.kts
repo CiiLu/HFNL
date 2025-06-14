@@ -23,9 +23,10 @@ subprojects {
         implementation("net.fabricmc:fabric-loader:0.16.14")
         implementation("net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7")
 
-        implementation("org.slf4j:slf4j-api:2.0.9")
-        implementation("org.slf4j:slf4j-log4j12:2.0.9")
-        implementation("log4j:log4j:1.2.17")
+        implementation("org.apache.logging.log4j:log4j-api:2.24.3")
+        implementation("org.apache.logging.log4j:log4j-core:2.24.3")
+        implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.24.3")
+        implementation("org.slf4j:slf4j-api:1.7.36")
 
         implementation("io.github.llamalad7:mixinextras-common:0.4.1")
 

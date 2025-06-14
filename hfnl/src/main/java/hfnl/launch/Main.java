@@ -10,82 +10,16 @@
  * */
 
 package hfnl.launch;
-
-import hfnl.launch.utils.FileLogger;
 import net.fabricmc.loader.impl.game.minecraft.Slf4jLogHandler;
 import net.fabricmc.loader.impl.util.log.Log;
-
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-/*
-* /*
-
-package hfnl.mod.mixin;
-
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialogLayout;
-import hfnl.mod.I18n;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import org.jackhuang.hmcl.ui.Controllers;
-import org.jackhuang.hmcl.ui.construct.DialogCloseEvent;
-import org.jackhuang.hmcl.ui.construct.JFXHyperlink;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-@Mixin(Controllers.class)
-public class ControllersMixin {
-    @Inject(method = "initialize(Ljavafx/stage/Stage;)V", at = @At("RETURN"))
-    private static void initializeInjecter(Stage stage, CallbackInfo ci) {
-        JFXDialogLayout dialog = new JFXDialogLayout();
-
-        dialog.setHeading(new Label("Hello Furnace Launcher"));
-        dialog.setBody(new Label(I18n.get("hfnl.notice")));
-
-        JFXHyperlink hmclRepoLink = new JFXHyperlink("HMCL Github");
-        hmclRepoLink.setExternalLink("https://github.com/HMCL-dev/HMCL/");
-
-        JFXButton yesButton = new JFXButton("确定");
-        JFXButton noButton = new JFXButton("退出");
-
-        yesButton.setOnAction(e -> dialog.fireEvent(new DialogCloseEvent()));
-
-        noButton.setOnAction(e -> javafx.application.Platform.exit());
-
-        dialog.setActions(hmclRepoLink, yesButton, noButton);
-
-        Controllers.dialog(dialog);
-    }
-}
-*/
-
 
 public class Main {
     public static void main(String[] args) throws Exception {
         Log.init(new Slf4jLogHandler());
-        System.getProperties().putIfAbsent("fabric.development", "true");
-        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss"));
-        File logPath = new File("./logs/");
 
-        if (!logPath.exists()) {
-            logPath.mkdirs();
-        }
+        System.getProperties().put("fabric.development", "true");
 
-        File logFile = new File("logs/" + time + ".log");
-
-        try (FileLogger logger = new FileLogger(System.out, logFile)) {
-            System.setErr(logger);
-            System.setOut(logger);
-            new Launcher().run(args);
-        }
+        new Launcher().run(args);
     }
 }
 
