@@ -13,7 +13,7 @@ import java.io.*;
 import java.nio.file.Path;
 
 @Mixin(org.jackhuang.hmcl.util.logging.Logger.class)
-public class LoggerMixin {
+public abstract class LoggerMixin {
     @Unique
     private static final Logger LOGGER = LoggerFactory.getLogger("HMCL");
 

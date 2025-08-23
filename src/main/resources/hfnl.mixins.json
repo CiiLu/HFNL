@@ -4,6 +4,7 @@
   "package": "hfnl.mod.mixin",
   "compatibilityLevel": "JAVA_11",
   "mixins": [
+    "ConfigHolderMixin",
     "LoggerMixin",
     "RootPageMixin",
     "SpinnerPaneMixin",

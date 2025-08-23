@@ -10,11 +10,8 @@
  * */
 package hfnl.mod.pages;
 
-import hfnl.mod.I18n;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import org.jackhuang.hmcl.setting.ConfigHolder;
-import org.jackhuang.hmcl.ui.Controllers;
 import org.jackhuang.hmcl.ui.FXUtils;
 import org.jackhuang.hmcl.ui.SVG;
 import org.jackhuang.hmcl.ui.animation.ContainerAnimations;
@@ -36,7 +33,7 @@ public class SettingPage extends DecoratorAnimatedPage implements DecoratorPage,
     private final TransitionPane transitionPane = new TransitionPane();
 
     public SettingPage() {
-        state.set(State.fromTitle("HFNL " + org.jackhuang.hmcl.util.i18n.I18n.i18n("settings")));
+        state.set(State.fromTitle("HFNL " + i18n("settings")));
 
         aboutTab.setNodeSupplier(AboutPage::new);
         modTab.setNodeSupplier(ModsListPage::new);

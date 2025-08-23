@@ -26,25 +26,21 @@ public class EntrypointPatch extends GamePatch {
 
     @Override
     public void process(FabricLauncher launcher, Function<String, ClassNode> classSource, Consumer<ClassNode> classEmitter) {
-        String entrypoint = launcher.getEntrypoint();
+        try {
+            String entrypoint = launcher.getEntrypoint();
 
-        ClassNode mainClass = classSource.apply(entrypoint);
+            ClassNode mainClass = classSource.apply(entrypoint);
 
-        if (mainClass == null) {
-            throw new RuntimeException("Could not find class node for entrypoint: " + entrypoint + "!");
+            MethodNode initMethod = findMainMethod(mainClass, method -> "main".equals(method.name));
+
+            ListIterator<AbstractInsnNode> it = initMethod.instructions.iterator();
+
+            it.add(new MethodInsnNode(Opcodes.INVOKESTATIC, Hooks.class.getName().replace('.', '/'), "init", "()V", false));
+
+            classEmitter.accept(mainClass);
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
         }
-
-        MethodNode initMethod = findMainMethod(mainClass, method -> "main".equals(method.name));
-
-        if (initMethod == null) {
-            throw new RuntimeException("Could not find init method in " + entrypoint + "!");
-        }
-
-        ListIterator<AbstractInsnNode> it = initMethod.instructions.iterator();
-
-        it.add(new MethodInsnNode(Opcodes.INVOKESTATIC, Hooks.class.getName().replace('.', '/'), "init", "()V", false));
-
-        classEmitter.accept(mainClass);
     }
 
     private MethodNode findMainMethod(ClassNode classNode, Function<MethodNode, Boolean> predicate) {

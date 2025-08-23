@@ -10,16 +10,18 @@
  * */
 
 package hfnl.launch;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.impl.game.minecraft.Slf4jLogHandler;
+import net.fabricmc.loader.impl.launch.knot.Knot;
 import net.fabricmc.loader.impl.util.log.Log;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Log.init(new Slf4jLogHandler());
 
         System.getProperties().put("fabric.development", "true");
 
-        new Launcher().run(args);
+        Knot.launch(args, EnvType.CLIENT);
     }
 }
 

@@ -10,16 +10,17 @@
  * */
 package hfnl.mod.pages;
 
-import hfnl.mod.I18n;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
+import org.jackhuang.hmcl.setting.ConfigHolder;
 import org.jackhuang.hmcl.ui.FXUtils;
 import org.jackhuang.hmcl.ui.construct.ComponentList;
 import org.jackhuang.hmcl.ui.construct.IconedTwoLineListItem;
+import org.jackhuang.hmcl.util.i18n.I18n;
 
 import java.lang.reflect.Method;
 
@@ -33,7 +34,7 @@ public final class AboutPage extends StackPane {
         launcher.setImage(FXUtils.newBuiltinImage("/assets/img/furnace.png"));
         launcher.setTitle("Hello Furnace Launcher");
         launcher.setExternalLink("https://github.com/ciilu/HFNL");
-        launcher.setSubtitle(FabricLoader.getInstance().getAllMods().size() + " " + I18n.get("hfnl.loaddedmod"));
+        launcher.setSubtitle(FabricLoader.getInstance().getAllMods().size() + " " + i18n("hfnl.loaddedmod"));
 
         IconedTwoLineListItem fabric = new IconedTwoLineListItem();
         fabric.setImage(FXUtils.newBuiltinImage("/assets/img/fabric.png"));

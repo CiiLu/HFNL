@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SpinnerPane.class)
-public class SpinnerPaneMixin {
+public abstract class SpinnerPaneMixin {
     @Shadow @Final public static EventType<Event> FAILED_ACTION;
 
     @Inject(method = "<clinit>",at = @At("HEAD"), cancellable = true)
