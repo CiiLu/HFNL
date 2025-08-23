@@ -14,18 +14,29 @@ import java.nio.file.Path;
 
 @Mixin(org.jackhuang.hmcl.util.logging.Logger.class)
 public class LoggerMixin {
-    @Shadow @Final public static org.jackhuang.hmcl.util.logging.Logger LOG;
     @Unique
     private static final Logger LOGGER = LoggerFactory.getLogger("HMCL");
 
+    /**
+     * @author CiiLu
+     * @reason [
+     */
     @Overwrite
     private void onExit() {
     }
 
+    /**
+     * @author CiiLu
+     * @reason [
+     */
     @Overwrite
     public void start(Path path) {
     }
 
+    /**
+     * @author CiiLu
+     * @reason [
+     */
     @Overwrite
     private void log(Level level, String caller, String msg, Throwable exception) {
         if (level == Level.ERROR) {
@@ -41,6 +52,10 @@ public class LoggerMixin {
         }
     }
 
+    /**
+     * @author CiiLu
+     * @reason [
+     */
     @Overwrite
     public Path getLogFile() {
         LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
@@ -50,6 +65,10 @@ public class LoggerMixin {
         return Path.of(Metadata.CURRENT_DIRECTORY + File.separator + fileAppender.getFileName());
     }
 
+    /**
+     * @author CiiLu
+     * @reason [
+     */
     @Overwrite
     public void exportLogs(OutputStream output) throws IOException {
         String logFilePath = String.valueOf(getLogFile().toAbsolutePath());

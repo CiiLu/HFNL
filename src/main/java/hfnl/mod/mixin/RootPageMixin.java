@@ -16,6 +16,7 @@ import org.jackhuang.hmcl.ui.Controllers;
 import org.jackhuang.hmcl.ui.SVG;
 import org.jackhuang.hmcl.ui.construct.AdvancedListBox;
 import org.jackhuang.hmcl.ui.construct.AdvancedListItem;
+import org.jackhuang.hmcl.util.Lazy;
 import org.jackhuang.hmcl.util.i18n.I18n;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -28,7 +29,7 @@ import static org.jackhuang.hmcl.ui.versions.VersionPage.wrap;
 @Mixin(targets = "org.jackhuang.hmcl.ui.main.RootPage$Skin")
 public abstract class RootPageMixin {
     @Unique
-    private SettingPage hfnlSettingPage;
+    private static final Lazy<SettingPage> hfnlSettingPage = new Lazy<>(SettingPage::new);
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(CallbackInfo ci, @Local AdvancedListBox sidebar) {
@@ -36,10 +37,7 @@ public abstract class RootPageMixin {
         hfnlSettingItem.setLeftGraphic(wrap(SVG.SCRIPT));
         hfnlSettingItem.setActionButtonVisible(false);
         hfnlSettingItem.setTitle("HFNL " + I18n.i18n("settings"));
-        hfnlSettingItem.setOnAction(e -> {
-            if (hfnlSettingPage == null) hfnlSettingPage = new SettingPage();
-            Controllers.navigate(hfnlSettingPage);
-        });
+        hfnlSettingItem.setOnAction(e -> Controllers.navigate(hfnlSettingPage.get()));
         sidebar.add(hfnlSettingItem);
     }
 }

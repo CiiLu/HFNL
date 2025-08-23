@@ -11,25 +11,16 @@
 package hfnl.mod.mixin;
 
 import hfnl.launch.Main;
+import org.jackhuang.hmcl.upgrade.UpdateHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin(targets = "org.jackhuang.hmcl.upgrade.UpdateHandler")
+@Mixin(UpdateHandler.class)
 public abstract class UpdateHandlerMixin {
-
-    /**
-     * @author
-     * @reason
-     */
-    @Overwrite
-    private static boolean isNestedApplication() {
-        StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
-        for(int i = 0; i < stacktrace.length; ++i) {
-            StackTraceElement element = stacktrace[i];
-            if (Main.class.getName().equals(element.getClassName()) && "main".equals(element.getMethodName())) {
-                return i + 1 != stacktrace.length;
-            }
-        }
-        return false;
+    @ModifyConstant(method = "isNestedApplication", constant = @Constant(classValue = org.jackhuang.hmcl.Main.class))
+    private static Class<?> injected(Class<?> value) {
+        return hfnl.launch.Main.class;
     }
 }
