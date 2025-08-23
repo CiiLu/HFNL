@@ -10,17 +10,14 @@
  * */
 package hfnl.launch.fabric;
 
+import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.fabricmc.loader.impl.FormattedException;
 import net.fabricmc.loader.impl.game.GameProviderHelper;
-import net.fabricmc.loader.impl.game.minecraft.Log4jLogHandler;
-import net.fabricmc.loader.impl.game.minecraft.Slf4jLogHandler;
 import net.fabricmc.loader.impl.game.patch.GameTransformer;
 import net.fabricmc.loader.impl.launch.FabricLauncher;
 import net.fabricmc.loader.impl.metadata.BuiltinModMetadata;
 import net.fabricmc.loader.impl.metadata.ContactInformationImpl;
 import net.fabricmc.loader.impl.util.Arguments;
-import net.fabricmc.loader.impl.util.log.Log;
-import net.fabricmc.loader.impl.util.log.LogHandler;
 import org.jackhuang.hmcl.Metadata;
 import org.jackhuang.hmcl.util.io.JarUtils;
 
@@ -28,10 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider {
     private static final String[] ENTRY_POINTS = {"org.jackhuang.hmcl.Main"};
@@ -86,13 +80,27 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
     }
 
     @Override
-    public boolean isObfuscated() {
+    public boolean requiresUrlClassLoader() {
         return false;
     }
 
+    private static final Set<BuiltinTransform> TRANSFORM_WIDENALL_STRIPENV_CLASSTWEAKS = EnumSet.of(BuiltinTransform.WIDEN_ALL_PACKAGE_ACCESS, BuiltinTransform.STRIP_ENVIRONMENT, BuiltinTransform.CLASS_TWEAKS);
+    private static final Set<BuiltinTransform> TRANSFORM_WIDENALL_CLASSTWEAKS = EnumSet.of(BuiltinTransform.WIDEN_ALL_PACKAGE_ACCESS, BuiltinTransform.CLASS_TWEAKS);
+    private static final Set<BuiltinTransform> TRANSFORM_STRIPENV = EnumSet.of(BuiltinTransform.STRIP_ENVIRONMENT);
+
     @Override
-    public boolean requiresUrlClassLoader() {
-        return false;
+    public Set<BuiltinTransform> getBuiltinTransforms(String className) {
+        boolean isLauncherClass = className.startsWith("org.jackhuang.hmcl");
+
+        if (isLauncherClass) {
+            if (FabricLoaderImpl.INSTANCE.isDevelopmentEnvironment()) {
+                return TRANSFORM_WIDENALL_STRIPENV_CLASSTWEAKS;
+            } else {
+                return TRANSFORM_WIDENALL_CLASSTWEAKS;
+            }
+        } else {
+            return TRANSFORM_STRIPENV;
+        }
     }
 
     @Override
@@ -143,9 +151,9 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
             Method mainMethod = mainClass.getMethod("main", String[].class);
             mainMethod.invoke(null, (Object) arguments.toArray());
         } catch (InvocationTargetException e) {
-            throw new FormattedException("The game has crashed!", e.getCause());
+            throw new RuntimeException(e);
         } catch (ReflectiveOperationException e) {
-            throw new FormattedException("Failed to start the game", e);
+            throw new RuntimeException(e);
         }
     }
 
