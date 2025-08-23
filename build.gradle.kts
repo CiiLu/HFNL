@@ -90,11 +90,10 @@ tasks.register<JavaExec>("run") {
         workingDir.mkdirs()
     }
 
-    systemProperties.set("hfnl.disable.warning", true)
-
     val jvmArgsList = mutableListOf<String>()
     jvmArgsList.addAll(
         listOf(
+            "-Dmixin.debug=true",
             "--add-opens", "java.base/java.lang=ALL-UNNAMED",
             "--add-opens", "java.base/java.net=ALL-UNNAMED",
             "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED",

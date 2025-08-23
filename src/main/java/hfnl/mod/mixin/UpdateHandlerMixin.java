@@ -10,10 +10,8 @@
  * */
 package hfnl.mod.mixin;
 
-import hfnl.launch.Main;
 import org.jackhuang.hmcl.upgrade.UpdateHandler;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 

@@ -1,3 +1,5 @@
+package hfnl.mod.util;
+
 /*
  * This program is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software Foundation,
@@ -8,12 +10,29 @@
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see <https://www.gnu.org/licenses/>.
  * */
-package hfnl.mod;
 
-import net.fabricmc.api.ClientModInitializer;
-public class HFNLMod implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
+import org.jackhuang.hmcl.setting.ConfigHolder;
+
+import java.util.ResourceBundle;
+
+public class ModI18n {
+    private static final String BUNDLE_NAME = "assets/lang/I18n";
+
+    private static ResourceBundle messages;
+
+    public static void initialize() {
+        try {
+            ConfigHolder.init();
+        } catch (Exception ignored) {}
+
+        messages = ResourceBundle.getBundle(BUNDLE_NAME, ConfigHolder.config().getLocalization().getLocale());
+    }
+
+    public static String get(String key) {
+        if (messages == null) {
+            initialize();
+        }
+        return messages.getString(key);
 
     }
 }

@@ -10,6 +10,7 @@
  * */
 package hfnl.launch.fabric;
 
+import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.fabricmc.loader.impl.FormattedException;
 import net.fabricmc.loader.impl.game.GameProviderHelper;
@@ -20,6 +21,7 @@ import net.fabricmc.loader.impl.metadata.ContactInformationImpl;
 import net.fabricmc.loader.impl.util.Arguments;
 import org.jackhuang.hmcl.Metadata;
 import org.jackhuang.hmcl.util.io.JarUtils;
+import org.spongepowered.asm.mixin.Mixins;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,6 +33,9 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
     private static final String[] ENTRY_POINTS = {"org.jackhuang.hmcl.Main"};
     private static final GameTransformer TRANSFORMER = new GameTransformer(new EntrypointPatch());
     private static final String GAME_VERSION = Metadata.VERSION;
+    private static final Set<BuiltinTransform> TRANSFORM_WIDENALL_STRIPENV_CLASSTWEAKS = EnumSet.of(BuiltinTransform.WIDEN_ALL_PACKAGE_ACCESS, BuiltinTransform.STRIP_ENVIRONMENT, BuiltinTransform.CLASS_TWEAKS);
+    private static final Set<BuiltinTransform> TRANSFORM_WIDENALL_CLASSTWEAKS = EnumSet.of(BuiltinTransform.WIDEN_ALL_PACKAGE_ACCESS, BuiltinTransform.CLASS_TWEAKS);
+    private static final Set<BuiltinTransform> TRANSFORM_STRIPENV = EnumSet.of(BuiltinTransform.STRIP_ENVIRONMENT);
     private Arguments arguments;
     private String entryPoint;
     private Path gameJar;
@@ -59,7 +64,7 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
     public Collection<BuiltinMod> getBuiltinMods() {
         HashMap<String, String> contactHashmap = new HashMap<>();
         contactHashmap.put("homepage", "https://github.com/HMCL-dev/HMCL");
-        BuiltinModMetadata metadata = (BuiltinModMetadata) new BuiltinModMetadata.Builder(getGameId(), getNormalizedGameVersion())
+        ModMetadata metadata =  new BuiltinModMetadata.Builder(getGameId(), getNormalizedGameVersion())
                 .setName(getGameName())
                 .addAuthor("HMCL-dev", new HashMap<>())
                 .setContact(new ContactInformationImpl(contactHashmap))
@@ -83,10 +88,6 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
     public boolean requiresUrlClassLoader() {
         return false;
     }
-
-    private static final Set<BuiltinTransform> TRANSFORM_WIDENALL_STRIPENV_CLASSTWEAKS = EnumSet.of(BuiltinTransform.WIDEN_ALL_PACKAGE_ACCESS, BuiltinTransform.STRIP_ENVIRONMENT, BuiltinTransform.CLASS_TWEAKS);
-    private static final Set<BuiltinTransform> TRANSFORM_WIDENALL_CLASSTWEAKS = EnumSet.of(BuiltinTransform.WIDEN_ALL_PACKAGE_ACCESS, BuiltinTransform.CLASS_TWEAKS);
-    private static final Set<BuiltinTransform> TRANSFORM_STRIPENV = EnumSet.of(BuiltinTransform.STRIP_ENVIRONMENT);
 
     @Override
     public Set<BuiltinTransform> getBuiltinTransforms(String className) {
@@ -146,6 +147,7 @@ public class GameProvider implements net.fabricmc.loader.impl.game.GameProvider 
 
     @Override
     public void launch(ClassLoader loader) {
+        Mixins.addConfiguration("hfnl.mixins.json");
         try {
             Class<?> mainClass = loader.loadClass(entryPoint);
             Method mainMethod = mainClass.getMethod("main", String[].class);

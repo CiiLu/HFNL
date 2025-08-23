@@ -5,8 +5,8 @@
   "compatibilityLevel": "JAVA_11",
   "mixins": [
     "ConfigHolderMixin",
+    "LauncherSettingsPageMixin",
     "LoggerMixin",
-    "RootPageMixin",
     "SpinnerPaneMixin",
     "UpdateHandlerMixin"
   ],

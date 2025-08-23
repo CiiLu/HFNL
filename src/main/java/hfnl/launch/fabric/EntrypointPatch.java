@@ -24,12 +24,11 @@ import java.util.function.Function;
 
 public class EntrypointPatch extends GamePatch {
 
+    @SuppressWarnings("ALL")
     @Override
     public void process(FabricLauncher launcher, Function<String, ClassNode> classSource, Consumer<ClassNode> classEmitter) {
         try {
-            String entrypoint = launcher.getEntrypoint();
-
-            ClassNode mainClass = classSource.apply(entrypoint);
+            ClassNode mainClass = classSource.apply(launcher.getEntrypoint());
 
             MethodNode initMethod = findMainMethod(mainClass, method -> "main".equals(method.name));
 
