@@ -97,6 +97,7 @@ tasks.register<JavaExec>("run") {
             "--add-opens", "java.base/java.lang=ALL-UNNAMED",
             "--add-opens", "java.base/java.net=ALL-UNNAMED",
             "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED",
+            "--add-opens", "java.base/java.lang=ALL-UNNAMED",
             "--add-opens", "java.base/jdk.internal.loader=ALL-UNNAMED",
             "--add-opens", "jdk.attach/sun.tools.attach=ALL-UNNAMED"
         )

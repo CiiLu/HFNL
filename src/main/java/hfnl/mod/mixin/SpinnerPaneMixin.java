@@ -7,8 +7,7 @@
  * See the GNU General Public License for more details.
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see <https://www.gnu.org/licenses/>.
- * */
-package hfnl.mod.mixin;
+ * */package hfnl.mod.mixin;
 
 import javafx.event.Event;
 import javafx.event.EventType;
@@ -16,9 +15,8 @@ import org.jackhuang.hmcl.ui.construct.SpinnerPane;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(SpinnerPane.class)
 public abstract class SpinnerPaneMixin {
@@ -26,8 +24,8 @@ public abstract class SpinnerPaneMixin {
     @Final
     public static EventType<Event> FAILED_ACTION;
 
-    @Inject(method = "<clinit>", at = @At("HEAD"), cancellable = true)
-    private static void inject(CallbackInfo ci) {
-        if (FAILED_ACTION != null) ci.cancel();
+    @ModifyConstant(method = "<clinit>", constant = @Constant(stringValue = "FAILED_ACTION"))
+    private static String inject(String constant) {
+        return constant + Thread.currentThread().getName();
     }
 }

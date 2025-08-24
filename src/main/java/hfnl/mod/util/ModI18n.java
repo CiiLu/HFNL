@@ -13,6 +13,7 @@ package hfnl.mod.util;
 
 import org.jackhuang.hmcl.setting.ConfigHolder;
 
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class ModI18n {
@@ -23,7 +24,8 @@ public class ModI18n {
     public static void initialize() {
         try {
             ConfigHolder.init();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         messages = ResourceBundle.getBundle(BUNDLE_NAME, ConfigHolder.config().getLocalization().getLocale());
     }
@@ -32,7 +34,10 @@ public class ModI18n {
         if (messages == null) {
             initialize();
         }
-        return messages.getString(key);
-
+        try {
+            return messages.getString(key);
+        } catch (MissingResourceException e) {
+            return key;
+        }
     }
 }
