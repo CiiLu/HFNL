@@ -6,7 +6,6 @@
   "mixins": [
     "AboutPageMixin",
     "ConfigHolderMixin",
-    "I18nWrapper",
     "LauncherSettingsPageMixin",
     "LoggerMixin",
     "SpinnerPaneMixin",
