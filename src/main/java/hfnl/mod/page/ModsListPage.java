@@ -44,7 +44,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.jackhuang.hmcl.ui.FXUtils.runInFX;
-import static org.jackhuang.hmcl.ui.FXUtils.setLimitHeight;
 import static org.jackhuang.hmcl.util.i18n.I18n.i18n;
 
 public final class ModsListPage extends ListPageBase<ModsListPage.ModItem> {
@@ -78,7 +77,7 @@ public final class ModsListPage extends ListPageBase<ModsListPage.ModItem> {
         public ItemSkin(ModItem control) {
             super(control);
 
-            setLimitHeight(control, 50);
+            FXUtils.setLimitHeight(control, 50);
 
             BorderPane root = new BorderPane();
             root.getStyleClass().add("md-list-cell");
@@ -141,7 +140,6 @@ public final class ModsListPage extends ListPageBase<ModsListPage.ModItem> {
         }
     }
 
-    // ModsListPage 的 Skin 类，负责渲染整个页面，包括工具栏
     private final class ModsListPageSkin extends ToolbarListPageSkin<ModsListPage> {
         ModsListPageSkin() {
             super(ModsListPage.this);
