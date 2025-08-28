@@ -53,7 +53,7 @@ dependencies {
     compileOnly(libs.twelvemonkeys.imageio.webp)
     compileOnly(libs.java.info)
 
-    implementation("org.glavo.hmcl:hmcl-dev:3.6.15.290")
+    implementation("org.glavo.hmcl:hmcl-dev:3.6.16.291")
 }
 javafx {
     configuration = "compileOnly"
