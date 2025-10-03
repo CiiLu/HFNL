@@ -70,7 +70,7 @@ public final class ModsListPage extends ListPageBase<ModsListPage.ModItem> {
     }
 
     private void openFolder() {
-        FXUtils.openFolder(FabricLoader.getInstance().getGameDir().resolve("mods").toFile());
+        FXUtils.openFolder(FabricLoader.getInstance().getGameDir().resolve("mods"));
     }
 
     public static final class ItemSkin extends SkinBase<ModItem> {
@@ -96,8 +96,8 @@ public final class ModsListPage extends ListPageBase<ModsListPage.ModItem> {
             TwoLineListItem center = new TwoLineListItem();
             center.setTitle(control.getName());
             center.setSubtitle(control.getDescription());
-            center.getTags().add("ID: " + control.mod.getMetadata().getId());
-            center.getTags().add(i18n("java.info.version") + ":" + control.mod.getMetadata().getVersion());
+            center.addTag("ID: " + control.mod.getMetadata().getId());
+            center.addTag(i18n("java.info.version") + ":" + control.mod.getMetadata().getVersion());
             root.setCenter(center);
 
             RipplerContainer container = new RipplerContainer(root);
