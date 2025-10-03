@@ -53,16 +53,16 @@ dependencies {
     compileOnly(libs.twelvemonkeys.imageio.webp)
     compileOnly(libs.java.info)
 
-    implementation("org.glavo.hmcl:hmcl-dev:3.6.16.291")
+    implementation("org.glavo.hmcl:hmcl-dev:3.6.18.297")
 }
 javafx {
     configuration = "compileOnly"
-    version = "17"
+    version = "21"
     modules("javafx.controls")
 }
 java {
-    targetCompatibility = JavaVersion.VERSION_11
-    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.register<Copy>("copyDependencies") {

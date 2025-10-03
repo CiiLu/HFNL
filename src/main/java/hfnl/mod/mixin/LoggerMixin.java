@@ -15,7 +15,6 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.FileAppender;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.jackhuang.hmcl.Metadata;
-import org.jackhuang.hmcl.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Mixin;
@@ -51,16 +50,16 @@ public abstract class LoggerMixin {
      * @reason [
      */
     @Overwrite
-    private void log(Level level, String caller, String msg, Throwable exception) {
-        if (level == Level.ERROR) {
+    private void log(System.Logger.Level level, String caller, String msg, Throwable exception) {
+        if (level == System.Logger.Level.ERROR) {
             LOGGER.error(msg, exception);
-        } else if (level == Level.INFO) {
+        } else if (level == System.Logger.Level.INFO) {
             LOGGER.info(msg, exception);
-        } else if (level == Level.DEBUG) {
+        } else if (level == System.Logger.Level.DEBUG) {
             LOGGER.debug(msg, exception);
-        } else if (level == Level.TRACE) {
+        } else if (level == System.Logger.Level.TRACE) {
             LOGGER.trace(msg, exception);
-        } else if (level == Level.WARNING) {
+        } else if (level == System.Logger.Level.WARNING) {
             LOGGER.warn(msg, exception);
         }
     }
